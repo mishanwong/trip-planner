@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Capital
+{% endblock %}
+
+{% block main %}
+      <form action="/capital" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="code" placeholder="Country Code" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Capital Lookup</button>
+    </form>
+    <div>
+        {{ capital }}
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Coordinates
+{% endblock %}
+
+{% block main %}
+      <form action="/coordinates" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="min-lat" placeholder="Minimum Latitude" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="max-lat" placeholder="Maximum Latitude" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="min-lng" placeholder="Minimum Longitude" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="max-lng" placeholder="Maximum Longitude" type="text">
+
+        </div>
+        <button class="btn btn-primary" type="submit">Coordinates Lookup</button>
+    </form>
+    <div>
+        {{ capital }}
+    </div>
+    
+{% endblock %}
