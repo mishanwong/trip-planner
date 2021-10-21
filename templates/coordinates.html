@@ -16,7 +16,10 @@
         <button class="btn btn-primary" type="submit">Coordinates Lookup</button>
     </form>
     <div>
-        {{ capital }}
+    {% for entry in data %}
+        {{ entry }}
+        <hr />
+    {% endfor %}
     </div>
     
 {% endblock %}
