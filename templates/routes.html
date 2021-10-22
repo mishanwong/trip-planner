@@ -7,16 +7,17 @@
 {% block main %}
       <form action="/route" method="post">
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="city-1" placeholder="City 1" type="text">
-            <input autocomplete="off" autofocus class="form-control" name="city-2" placeholder="City 2" type="text">
-            <input autocomplete="off" autofocus class="form-control" name="city-3" placeholder="City 3" type="text">
-            <input autocomplete="off" autofocus class="form-control" name="city-4" placeholder="City 4" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="city-0" placeholder="City 1" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="city-1" placeholder="City 2" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="city-2" placeholder="City 3" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="city-3" placeholder="City 4" type="text">
 
         </div>
         <button class="btn btn-primary" type="submit">Routes Lookup</button>
     </form>
     <div>
-    
+        {{ path_list }}
+        {{ distance }}
     </div>
     
 {% endblock %}

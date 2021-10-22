@@ -61,49 +61,47 @@ def coordinates():
 @app.route("/route", methods=["GET", "POST"])
 def route():
     if request.method == "POST":
-        # city_1 = request.form.get("city-1")
-        # city_2 = request.form.get("city-2")
-        # city_3 = request.form.get("city-3")
-        # city_4 = request.form.get("city-4")
-        city_0 = "Kuala Lumpur"
-        city_1 = "Brasilia"
-        city_2 = "Bangkok"
-        city_3 = "New Delhi"
+        cities = []
+        for i in range(NUM_CITIES):
+            cities.append(request.form.get(f"city-{i}"))
+
+        coord_list = []
 
         url = f"http://api.worldbank.org/v2/country/all?format=json&per_page=500"
 
         r = requests.get(url)
         data = r.json()[1]
 
+        capital_cities = {}
+
         for country in data:
-            if country["capitalCity"] == city_0:
-                coord_0 = (float(country["latitude"]), float(country["longitude"]))
+            if not country["capitalCity"]:
+                continue
+            capital_cities[country["capitalCity"]] = {
+                "latitude": country["latitude"],
+                "longitude": country["longitude"],
+            }
 
-            if country["capitalCity"].lower() == city_1.lower():
-                coord_1 = (float(country["latitude"]), float(country["longitude"]))
+        # Validate cities entry
 
-            if country["capitalCity"].lower() == city_2.lower():
-                coord_2 = (float(country["latitude"]), float(country["longitude"]))
+        for city in cities:
+            if city in capital_cities:
+                coord_list.append(
+                    (
+                        float(capital_cities[city]["latitude"]),
+                        float(capital_cities[city]["longitude"]),
+                    )
+                )
 
-            if country["capitalCity"].lower() == city_3.lower():
-                coord_3 = (float(country["latitude"]), float(country["longitude"]))
+        distance_matrix = []
 
-        # Calculate distance between all cities - total 6 distances and save it in a matrix
-        d01 = geodesic(coord_0, coord_1).miles
-        d02 = geodesic(coord_0, coord_2).miles
-        d03 = geodesic(coord_0, coord_3).miles
-        d12 = geodesic(coord_1, coord_2).miles
-        d13 = geodesic(coord_1, coord_3).miles
-        d23 = geodesic(coord_2, coord_3).miles
+        for i in range(NUM_CITIES):  # [0, 1, 2, 3]
+            distance_row = []
+            for j in range(NUM_CITIES):  # [0, 1, 2, 3]
+                distance_row.append(geodesic(coord_list[i], coord_list[j]).miles)
+            distance_matrix.append(distance_row)
 
-        # This can be improved
-        distance_matrix = [
-            [0, d01, d02, d03],
-            [d01, 0, d12, d13],
-            [d02, d12, 0, d23],
-            [d03, d13, d23, 0],
-        ]
-
+        # Get all permutation of routes
         list_of_routes = []
 
         perm = permutations([0, 1, 2, 3])
@@ -123,7 +121,11 @@ def route():
                 min_distance = route[1]
                 path = route[0]
 
-        print(path)
+        path_list = []
+        for i in path:
+            path_list.append(cities[i])
+
+        print(path_list)
         return render_template("routes.html")
     else:
         return render_template("routes.html")
