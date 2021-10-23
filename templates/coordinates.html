@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block main %}
-      <form action="/coordinates" method="post">
+    <h3>Coordinates</h3>
+    <p>Enter a minimum and a maximum latitude, and a minimum and a maximum longitude to find a list of capital cities located within those coordinates.</p>
+    <p>Latitudes range from -90 to 90 and longitudes ranges from -180 to 180.</p>
+    <form action="/coordinates" method="post">
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="min-lat" placeholder="Minimum Latitude" type="text">
             <input autocomplete="off" autofocus class="form-control" name="max-lat" placeholder="Maximum Latitude" type="text">

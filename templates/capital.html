@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block main %}
-      <form action="/capital" method="post">
+    <h3>Capital</h3>
+    <p>Enter World Bank's <a href="https://wits.worldbank.org/wits/wits/witshelp/content/codes/country_codes.htm" target="_blank">ISO 3-letter code</a> to find the capital city of that country.</p>
+    <form action="/capital" method="post">
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="code" placeholder="Country Code" type="text">
         </div>

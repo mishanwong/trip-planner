@@ -19,7 +19,7 @@ def capital():
     if request.method == "POST":
 
         # Get user input
-        country_code = request.form.get("code")
+        country_code = request.form.get("code").strip()
 
         # Validate input is not empty
         error_msg = ""
@@ -75,15 +75,15 @@ def coordinates():
                 error_msg = "Please enter valid input range. -90 to 90 for latitude and -180 to 180 for longitude."
                 return render_template("coordinates.html", error_msg=error_msg)
         except:
-            error_msg = "Please enter valid input"
+            error_msg = "Please enter valid input."
             return render_template("coordinates.html", error_msg=error_msg)
 
         if float(max_lat) < float(min_lat):
-            error_msg = "Minimum latitude cannot be greater than maximum latitude"
+            error_msg = "Minimum latitude cannot be greater than maximum latitude."
             return render_template("coordinates.html", error_msg=error_msg)
 
         if float(max_lng) < float(min_lng):
-            error_msg = "Minimum longitude cannot be greater than maximum longitude"
+            error_msg = "Minimum longitude cannot be greater than maximum longitude."
             return render_template("coordinates.html", error_msg=error_msg)
 
         # Call World Bank API
@@ -124,7 +124,7 @@ def route():
         # Get user input and store it in a list
         cities = []
         for i in range(NUM_CITIES):
-            cities.append(request.form.get(f"city-{i}"))
+            cities.append(request.form.get(f"city-{i}").strip())
 
         # Call World Bank API and save capital city and coordinates in a new dictionary
         url = f"http://api.worldbank.org/v2/country/all?format=json&per_page=500"
@@ -137,7 +137,8 @@ def route():
         for country in data:
             if not country["capitalCity"]:
                 continue
-            capital_cities[country["capitalCity"]] = {
+            capital = country["capitalCity"].lower()
+            capital_cities[capital] = {
                 "latitude": country["latitude"],
                 "longitude": country["longitude"],
             }
@@ -145,14 +146,14 @@ def route():
         # If city entered is not in World Bank's database, show error message
         error_msg = ""
         for city in cities:
-            if city not in capital_cities:
-                error_msg = "One or more cities entered is invalid"
+            if city.lower() not in capital_cities:
+                error_msg = "One or more cities entered is invalid."
                 return render_template("route.html", error_msg=error_msg)
 
         # Save the coordinates of the cities in a list
         coord_list = []
         for city in cities:
-            if city in capital_cities:
+            if city.lower() in capital_cities:
                 coord_list.append(
                     (
                         float(capital_cities[city]["latitude"]),
@@ -191,7 +192,7 @@ def route():
         # Convert the route from index to string
         shortest_path_str = []
         for i in shortest_path:
-            shortest_path_str.append(cities[i])
+            shortest_path_str.append(str.title(cities[i]))
 
         min_distance = "{0:,.0f}".format(min_distance)
 
