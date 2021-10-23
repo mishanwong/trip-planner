@@ -15,9 +15,21 @@
         </div>
         <button class="btn btn-primary" type="submit">Coordinates Lookup</button>
     </form>
+    <br />
+    {% if error_msg %}
+        <p class="error">{{ error_msg }}</p>
+    {% endif %}
+    {% if cities %}
+    <p>
+    Capital cities between the latitude of {{ min_lat }} and {{ max_lat }} and longitude of {{ min_lng }} and {{ max_lng }}:
+    </p>
+    {% endif %}
+    
+    <br />
     <div>
-    {% for entry in data %}
-        {{ entry }}
+
+    {% for city in cities %}
+        {{ city }}
         <hr />
     {% endfor %}
     </div>

@@ -3,35 +3,11 @@
 {% block title %}
     Portfolio
 {% endblock %}
-
+   
 {% block main %}
-      <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Symbol</th>
-                <th>Name</th>
-                <th>Shares</th>
-                <th>Price</th>
-                <th>TOTAL</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for share in shares %}
-            <tr>
-                <td>{{share.symbol}}</td>
-                <td>{{share.name}}</td>
-                <td>{{share.num_shares}}</td>
-                <td>{{share.price}}</td>
-                <td>{{share.total}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="4"></td>
-                <td>{{ total_value }}</td>
-            </tr>
-        </tfoot>
-        
-    </table>
+    <ol>
+        <li><a href="/capital">Capital</a></li>
+        <li><a href="/coordinates">Coordinates</a></li>
+        <li><a href="/route">Shortest route</a></li>
+    </ol>
 {% endblock %}
