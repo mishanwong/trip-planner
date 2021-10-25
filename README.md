@@ -12,7 +12,7 @@ This is a coding challenge for an interview.
 - Python and [Flask](https://flask.palletsprojects.com/en/2.0.x/) for back-end
 
 # Getting started
-1. Fork this repo
+1. Clone this repo
 2. Run `cd trip-planner`
 3. Create a virtual environment by running `python3 -m venv venv`
 4. Activate the virtual environment by running `. venv/bin/activate`
