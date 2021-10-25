@@ -124,7 +124,7 @@ def route():
         # Get user input and store it in a list
         cities = []
         for i in range(NUM_CITIES):
-            cities.append(request.form.get(f"city-{i}").strip())
+            cities.append(request.form.get(f"city-{i}").strip().lower())
 
         # Call World Bank API and save capital city and coordinates in a new dictionary
         url = f"http://api.worldbank.org/v2/country/all?format=json&per_page=500"
@@ -146,14 +146,14 @@ def route():
         # If city entered is not in World Bank's database, show error message
         error_msg = ""
         for city in cities:
-            if city.lower() not in capital_cities:
+            if city not in capital_cities:
                 error_msg = "One or more cities entered is invalid."
                 return render_template("route.html", error_msg=error_msg)
 
         # Save the coordinates of the cities in a list
         coord_list = []
         for city in cities:
-            if city.lower() in capital_cities:
+            if city in capital_cities:
                 coord_list.append(
                     (
                         float(capital_cities[city]["latitude"]),
